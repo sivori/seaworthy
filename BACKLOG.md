@@ -1,7 +1,7 @@
 ## Now
 - [ ] Verify userConfig → hooks via a real marketplace install (`claude plugin marketplace add ./`): CLAUDE_PLUGIN_OPTION_KEY_ID naming is from docs, untested; if wrong, hooks silently no-op for userConfig-only users
 - [ ] Confirm the harness accepts a 2700 s hook timeout (a lower cap would kill the watcher mid-watch, silently)
-- [ ] Create the GitHub repo, push, submit to the claude.ai directory
+- [ ] Submit to the claude.ai directory (claude.ai/directory/manage, repo sivori/shipwright, root, branch main)
 
 ## Next
 - [ ] check_release: warn when the attached build is older than the newest valid build for that version
@@ -17,4 +17,5 @@
 - [ ] Xcode Cloud compute-hours usage, if Apple exposes it @idea
 
 ## Done
+- [x] 2026-10-05 Security + privacy pass; published to github.com/sivori/shipwright (public)
 - [x] 2026-10-05 Verified async + asyncRewake in the real harness (turn 4.8 s with a 15 s hook; rewake starts a new turn), PostToolUse tool_response shape, PreToolUse systemMessage
