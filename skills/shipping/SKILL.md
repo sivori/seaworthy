@@ -34,7 +34,8 @@ The shipwright MCP tools do the work; this is what to know while using them.
 
 - "What to Test" can live in the repo: Xcode Cloud reads `TestFlight/WhatToTest.<locale>.txt` next to the project (one file per locale) and applies it to the build. Edit it in the same commit as the change.
 - Distribution is set on the workflow's archive action. Builds marked "TestFlight (Internal Testing Only)" can never be submitted to the App Store. The fix is in the Xcode Cloud workflow editor (Archive → Deployment Preparation → TestFlight and App Store), because **the API cannot change it**, followed by a new build.
-- Builds expire after 90 days. Internal groups only receive builds automatically if the group is set to.
+- Builds expire after 90 days.
+- An internal TestFlight group receives new builds automatically only when the group has automatic distribution turned on. Otherwise someone adds each build to it by hand.
 
 ## Export compliance
 
