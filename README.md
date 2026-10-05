@@ -31,9 +31,9 @@ Seaworthy puts all of that where Claude can see it, and lets Claude fix it, aski
 
 ## What it does
 
-**⛵ Tells you what a push ships.** Before `git push`, one line names the Xcode Cloud workflows it starts and where the builds go.
+**⛵ Tells you what a push ships, and stops one that can't.** Before `git push`, one line names the Xcode Cloud workflows it starts and where the builds go. If the commit is still stamped with a version Apple already approved, it asks first: that build would archive for minutes and then be refused at upload.
 
-**🛟 Catches the build that never started, and the one that failed.** After a push, Seaworthy watches in the background. If no build appears within 4 minutes, or the build fails, Claude hears about it, and offers to start it or explains the failure with `file:line`.
+**🛟 Catches the build that never started, and the one that failed.** After a push, Seaworthy watches in the background. If no build appears within 4 minutes, or the build fails, Claude hears about it. It offers to start the missing build, or names the failure's cause (a closed version train, a compile error at `file:line`, a failing test) and the fix.
 
 **🧭 Checks a release before Apple does.** `/ship-check` lists every blocker with its fix, then fixes what it can.
 

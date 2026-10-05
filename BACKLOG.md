@@ -4,7 +4,6 @@
 
 ## Next
 - [ ] check_release: warn when the attached build is older than the newest valid build for that version
-- [ ] triage_run: verify against a real FAILED run (none in the account's retained history at build time; built from documented shapes)
 - [ ] Screenshot upload (reserve → chunk upload → PATCH uploaded + md5) for update_version
 - [ ] Copy review contact and description from the previous version into a new one
 - [ ] Watch review status after submit (poll via asyncRewake, report approval or rejection with the guideline cited)
@@ -16,6 +15,7 @@
 - [ ] Xcode Cloud compute-hours usage, if Apple exposes it @idea
 
 ## Done
+- [x] 2026-10-05 0.4.0 from the first real failure (Exorcise build 113, closed 1.11 train): triage diagnoses Prepare-for-ASC failures (archive version vs approved versions), log excerpts drop Xcode provisioning chatter, pre-push asks before pushing a commit stamped with an approved version
 - [x] 2026-10-05 Renamed shipwright → seaworthy (0.3.0): four directory plugins already used "shipwright" (NAME_CONFUSABLE hold)
 - [x] 2026-10-05 Verified the marketplace install end to end with credentials only in plugin settings (ASC_* unset): pre-push warning, decoy push (fetch URL = real repo, pushurl = local bare repo), missed-build rewake after 4 min
 - [x] 2026-10-05 Security + privacy pass; published to github.com/sivori/seaworthy (public)

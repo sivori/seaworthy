@@ -15,7 +15,7 @@ import { loadCiIndex, findProduct, recentRuns, summarizeRun, findRunsForCommit, 
 import { findApp, gatherRelease, checkReadiness, planSubmission, executeSubmission, compareVersions, PLATFORMS } from '../lib/release.mjs';
 import { gate } from '../lib/confirm.mjs';
 
-const VERSION = '0.3.3';
+const VERSION = '0.4.0';
 
 let apiCache;
 function api() {
@@ -96,7 +96,7 @@ const TOOLS = [
         ? list.find((r) => r.attributes.number === run_number)
         : list.find((r) => ['FAILED', 'ERRORED'].includes(r.attributes.completionStatus));
       if (!run) return run_number ? `Run ${run_number} is not among the 50 most recent runs of ${p.name}.` : `No failed runs among the 50 most recent runs of ${p.name}.`;
-      return triageRun(api(), run, { logExcerpt: !!log_excerpt });
+      return triageRun(api(), run, { logExcerpt: !!log_excerpt, appId: p.appId });
     },
   },
   {
