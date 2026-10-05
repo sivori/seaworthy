@@ -7,7 +7,7 @@
       "name": "seaworthy",
       "source": "./",
       "description": "Xcode Cloud and App Store releases from Claude Code: push warnings, missed and failed build alerts, triage, release readiness, submit for review",
-      "version": "0.3.0"
+      "version": "0.3.1"
     }
   ]
 }

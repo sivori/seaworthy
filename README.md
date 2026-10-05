@@ -20,7 +20,7 @@ Then configure it from `/plugin` → seaworthy:
 | Setting | |
 |---|---|
 | `key_id`, `issuer_id` | An App Store Connect API key from Users and Access → Integrations → App Store Connect API. **App Manager** role to create versions and submit; Developer is enough for read-only use. |
-| `private_key` | The contents of the `AuthKey_<key_id>.p8` file you downloaded, BEGIN and END lines included. A sensitive setting: Claude Code keeps it in the system keychain. |
+| `private_key` | The contents of the `AuthKey_<key_id>.p8` file, BEGIN and END lines included. The field holds one line, so copy it flattened: `tr -d '\n' < AuthKey_<key_id>.p8 \| pbcopy`. A sensitive setting: Claude Code keeps it in the system keychain. |
 | `push_warning`, `build_watch` | The two push hooks; both on by default. |
 
 Requires Node 18+ and nothing else: no `npm install`.

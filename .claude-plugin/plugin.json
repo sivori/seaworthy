@@ -1,7 +1,7 @@
 {
   "name": "seaworthy",
   "displayName": "Seaworthy",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Ship iOS apps from Claude Code with Xcode Cloud and App Store Connect: see what a push will ship, catch builds that never started or failed, triage failures, check release readiness, and submit for review, with your own API key.",
   "icon": "./.claude-plugin/icon.png",
   "author": {
@@ -34,7 +34,7 @@
     "private_key": {
       "type": "string",
       "title": "Private key (.p8 contents)",
-      "description": "Paste the whole AuthKey_<key ID>.p8 file, including the BEGIN and END lines. Stored in the system keychain, not in settings.json.",
+      "description": "The AuthKey_<key ID>.p8 file as one line (macOS: tr -d '\\n' < AuthKey_<key ID>.p8 | pbcopy), BEGIN and END lines included. Stored in the system keychain, not in settings.json.",
       "sensitive": true,
       "default": ""
     },
