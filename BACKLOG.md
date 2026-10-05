@@ -1,6 +1,5 @@
 ## Now
-- [ ] Verify userConfig → hooks via a real marketplace install (`claude plugin marketplace add ./`): CLAUDE_PLUGIN_OPTION_KEY_ID naming is from docs, untested; if wrong, hooks silently no-op for userConfig-only users
-- [ ] Confirm the harness accepts a 2700 s hook timeout (a lower cap would kill the watcher mid-watch, silently)
+- [ ] Confirm the harness accepts a 2700 s hook timeout (verified past 4 min; a lower cap would kill a long build watch silently)
 - [ ] Submit to the claude.ai directory (claude.ai/directory/manage, repo sivori/shipwright, root, branch main)
 
 ## Next
@@ -17,5 +16,6 @@
 - [ ] Xcode Cloud compute-hours usage, if Apple exposes it @idea
 
 ## Done
+- [x] 2026-10-05 Verified the marketplace install end to end with credentials only in plugin settings (ASC_* unset): pre-push warning, decoy push (fetch URL = real repo, pushurl = local bare repo), missed-build rewake after 4 min
 - [x] 2026-10-05 Security + privacy pass; published to github.com/sivori/shipwright (public)
 - [x] 2026-10-05 Verified async + asyncRewake in the real harness (turn 4.8 s with a 15 s hook; rewake starts a new turn), PostToolUse tool_response shape, PreToolUse systemMessage
