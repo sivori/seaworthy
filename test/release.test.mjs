@@ -122,11 +122,17 @@ test('describeErrors surfaces associatedErrors from a 409', () => {
   assert.match(describeErrors(res), /↳ \/v1\/appStoreVersions\/v2: You must provide a copyright\./);
 });
 
-test('resolveCreds ignores empty and unsubstituted userConfig, falls back to ASC_*', async () => {
+test('resolveCreds reads only plugin settings and repairs a flattened .p8', async () => {
   const { resolveCreds } = await import('../lib/asc.mjs');
-  const r = resolveCreds({ SHIPWRIGHT_KEY_ID: '${user_config.key_id}', SHIPWRIGHT_ISSUER_ID: '', ASC_KEY_ID: 'K1', ASC_ISSUER_ID: 'I1', ASC_KEY_PATH: '/nonexistent/key.p8' });
-  assert.match(r.error, /\/nonexistent\/key\.p8/);
-  assert.match(resolveCreds({}).error, /not configured/);
+  const { generateKeyPairSync } = await import('node:crypto');
+  const pem = generateKeyPairSync('ec', { namedCurve: 'prime256v1' }).privateKey.export({ type: 'pkcs8', format: 'pem' });
+  // Other tools' variables are ignored, and so are unfilled placeholders.
+  assert.match(resolveCreds({ ASC_KEY_ID: 'K', ASC_ISSUER_ID: 'I', SHIPWRIGHT_KEY_ID: '${user_config.key_id}' }).error, /not configured/);
+  const flat = pem.replace(/\n/g, ' ');
+  const r = resolveCreds({ CLAUDE_PLUGIN_OPTION_KEY_ID: 'K', CLAUDE_PLUGIN_OPTION_ISSUER_ID: 'I', CLAUDE_PLUGIN_OPTION_PRIVATE_KEY: flat });
+  assert.equal(r.error, undefined);
+  assert.equal(r.privateKey, pem);
+  assert.match(resolveCreds({ SHIPWRIGHT_KEY_ID: 'K', SHIPWRIGHT_ISSUER_ID: 'I', SHIPWRIGHT_PRIVATE_KEY: 'not a key' }).error, /not a valid/);
 });
 
 test('redactSecrets masks token-shaped strings in log lines', async () => {
@@ -141,12 +147,7 @@ test('redactSecrets masks token-shaped strings in log lines', async () => {
 test('the API client refuses absolute URLs so the token stays with Apple', async () => {
   const { ascClient } = await import('../lib/asc.mjs');
   const { generateKeyPairSync } = await import('node:crypto');
-  const { writeFileSync, mkdtempSync } = await import('node:fs');
-  const { join } = await import('node:path');
-  const { tmpdir } = await import('node:os');
-  const dir = mkdtempSync(join(tmpdir(), 'sw-'));
   const { privateKey } = generateKeyPairSync('ec', { namedCurve: 'prime256v1' });
-  writeFileSync(join(dir, 'k.p8'), privateKey.export({ type: 'pkcs8', format: 'pem' }));
-  const api = ascClient({ keyId: 'K', issuer: 'I', keyPath: join(dir, 'k.p8') });
+  const api = ascClient({ keyId: 'K', issuer: 'I', privateKey: privateKey.export({ type: 'pkcs8', format: 'pem' }) });
   await assert.rejects(api('GET', 'https://evil.example/v1/apps'), /refusing non-path/);
 });

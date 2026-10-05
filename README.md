@@ -20,8 +20,7 @@ Then configure it from `/plugin` → shipwright:
 | Setting | |
 |---|---|
 | `key_id`, `issuer_id` | An App Store Connect API key from Users and Access → Integrations → App Store Connect API. **App Manager** role to create versions and submit; Developer is enough for read-only use. |
-| `key_path` | Optional. Defaults to `~/.appstoreconnect/private_keys/AuthKey_<key_id>.p8`. |
-| | Already export `ASC_KEY_ID` / `ASC_ISSUER_ID` / `ASC_KEY_PATH` for other tooling? Leave the settings blank and those are used. |
+| `private_key` | The contents of the `AuthKey_<key_id>.p8` file you downloaded, BEGIN and END lines included. A sensitive setting: Claude Code keeps it in the system keychain. |
 | `push_warning`, `build_watch` | The two push hooks; both on by default. |
 
 Requires Node 18+ and nothing else: no `npm install`.
@@ -47,7 +46,7 @@ Plus a `shipping` skill (traps: closed trains, missed webhooks, export complianc
 
 ## Security and privacy
 
-- **Your key stays local.** The `.p8` is read from disk to sign short-lived (10-minute) tokens, which are sent only to `api.appstoreconnect.apple.com`. shipwright has no server, no telemetry and no dependencies.
+- **Your key stays local.** The private key lives in the system keychain as a sensitive plugin setting. shipwright reads no key files or other tools' credentials. The key signs short-lived (10-minute) tokens, which are sent only to `api.appstoreconnect.apple.com`. shipwright has no server, no telemetry and no dependencies.
 - **What reaches the model:** app and build metadata, workflow settings, run results, commit subjects, and error and test messages from your builds. The App Review demo-account password is never read into a tool result. Error lines taken from build logs (`log_excerpt`) are passed through a filter that masks token-shaped strings, but it can't catch every secret a script prints, so keep secrets out of CI logs.
 - **Confirmation is a guard, not a lock.** The confirm token makes Claude show you the plan before acting, and goes stale if anything changes, but Claude receives the token in the same response. The real boundary is Claude Code's permission prompt. **Don't add `start_build` or `submit_for_review` to your allowed tools.** Build logs and commit messages are untrusted text, and the prompt is what stops an instruction hidden in them.
 - **Hooks** run `git` read-only (`rev-parse`, `config`, `remote get-url`) and make App Store Connect GETs. They never modify your repo or your account. A small cache of your Xcode Cloud workflows lives at `~/.cache/shipwright/` (mode 600).

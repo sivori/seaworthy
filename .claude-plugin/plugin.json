@@ -1,12 +1,22 @@
 {
   "name": "shipwright",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Ship iOS apps from Claude Code with Xcode Cloud and App Store Connect: see what a push will ship, catch builds that never started or failed, triage failures, check release readiness, and submit for review, with your own API key.",
-  "author": { "name": "sivori", "url": "https://github.com/sivori" },
+  "icon": "./.claude-plugin/icon.png",
+  "author": {
+    "name": "sivori",
+    "url": "https://github.com/sivori"
+  },
   "homepage": "https://github.com/sivori/shipwright",
   "repository": "https://github.com/sivori/shipwright",
   "license": "MIT",
-  "keywords": ["ios", "xcode-cloud", "testflight", "app-store-connect", "release"],
+  "keywords": [
+    "ios",
+    "xcode-cloud",
+    "testflight",
+    "app-store-connect",
+    "release"
+  ],
   "userConfig": {
     "key_id": {
       "type": "string",
@@ -20,10 +30,11 @@
       "description": "Shown above the key list in Users and Access → Integrations.",
       "default": ""
     },
-    "key_path": {
+    "private_key": {
       "type": "string",
-      "title": "Private key file (.p8)",
-      "description": "Optional. Defaults to ~/.appstoreconnect/private_keys/AuthKey_<key ID>.p8, where Xcode and altool look.",
+      "title": "Private key (.p8 contents)",
+      "description": "Paste the whole AuthKey_<key ID>.p8 file, including the BEGIN and END lines. Stored in the system keychain, not in settings.json.",
+      "sensitive": true,
       "default": ""
     },
     "push_warning": {

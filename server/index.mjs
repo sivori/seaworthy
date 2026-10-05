@@ -15,7 +15,7 @@ import { loadCiIndex, findProduct, recentRuns, summarizeRun, findRunsForCommit, 
 import { findApp, gatherRelease, checkReadiness, planSubmission, executeSubmission, compareVersions, PLATFORMS } from '../lib/release.mjs';
 import { gate } from '../lib/confirm.mjs';
 
-const VERSION = '0.1.0';
+const VERSION = '0.2.0';
 
 let apiCache;
 function api() {
