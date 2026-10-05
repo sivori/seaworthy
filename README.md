@@ -41,9 +41,17 @@ Requires Node 18+ and nothing else: no `npm install`.
 | Irreversible | `start_build` | Start a workflow on a branch |
 | | `submit_for_review` | Cancel stale → attach build → submit |
 
-**Irreversible tools ask first, structurally.** Called without a token, they change nothing and return the plan plus a `confirm` token. The token is a hash of that plan. Calling again with it rebuilds the plan from live state and runs only if nothing changed, so an approval can't be stretched to cover a different action.
+**Irreversible tools ask first.** Called without a token, they change nothing and return the plan plus a `confirm` token. The token is a hash of that plan. Calling again with it rebuilds the plan from live state and runs only if nothing changed, so an approval can't be stretched to cover a different action.
 
 Plus a `shipping` skill (traps: closed trains, missed webhooks, export compliance, rejection patterns) and `/ship-check`.
+
+## Security and privacy
+
+- **Your key stays local.** The `.p8` is read from disk to sign short-lived (10-minute) tokens, which are sent only to `api.appstoreconnect.apple.com`. shipwright has no server, no telemetry and no dependencies.
+- **What reaches the model:** app and build metadata, workflow settings, run results, commit subjects, and error and test messages from your builds. The App Review demo-account password is never read into a tool result. Error lines taken from build logs (`log_excerpt`) are passed through a filter that masks token-shaped strings, but it can't catch every secret a script prints, so keep secrets out of CI logs.
+- **Confirmation is a guard, not a lock.** The confirm token makes Claude show you the plan before acting, and goes stale if anything changes, but Claude receives the token in the same response. The real boundary is Claude Code's permission prompt. **Don't add `start_build` or `submit_for_review` to your allowed tools.** Build logs and commit messages are untrusted text, and the prompt is what stops an instruction hidden in them.
+- **Hooks** run `git` read-only (`rev-parse`, `config`, `remote get-url`) and make App Store Connect GETs. They never modify your repo or your account. A small cache of your Xcode Cloud workflows lives at `~/.cache/shipwright/` (mode 600).
+- **Least privilege:** a Developer-role key covers everything except creating versions and submitting.
 
 ## Development
 

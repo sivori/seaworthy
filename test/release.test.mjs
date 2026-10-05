@@ -128,3 +128,25 @@ test('resolveCreds ignores empty and unsubstituted userConfig, falls back to ASC
   assert.match(r.error, /\/nonexistent\/key\.p8/);
   assert.match(resolveCreds({}).error, /not configured/);
 });
+
+test('redactSecrets masks token-shaped strings in log lines', async () => {
+  const { redactSecrets } = await import('../lib/ci.mjs');
+  const fake = 'ghp_' + 'a'.repeat(36);
+  assert.equal(redactSecrets(`error: push failed with ${fake}`), 'error: push failed with [redacted]');
+  assert.equal(redactSecrets('error: API_KEY=abc123 rejected'), 'error: API_KEY=[redacted] rejected');
+  assert.equal(redactSecrets('fatal: https://user:pw@github.com/x'), 'fatal: https://[redacted]@github.com/x');
+  assert.equal(redactSecrets('error: no such module Foo'), 'error: no such module Foo');
+});
+
+test('the API client refuses absolute URLs so the token stays with Apple', async () => {
+  const { ascClient } = await import('../lib/asc.mjs');
+  const { generateKeyPairSync } = await import('node:crypto');
+  const { writeFileSync, mkdtempSync } = await import('node:fs');
+  const { join } = await import('node:path');
+  const { tmpdir } = await import('node:os');
+  const dir = mkdtempSync(join(tmpdir(), 'sw-'));
+  const { privateKey } = generateKeyPairSync('ec', { namedCurve: 'prime256v1' });
+  writeFileSync(join(dir, 'k.p8'), privateKey.export({ type: 'pkcs8', format: 'pem' }));
+  const api = ascClient({ keyId: 'K', issuer: 'I', keyPath: join(dir, 'k.p8') });
+  await assert.rejects(api('GET', 'https://evil.example/v1/apps'), /refusing non-path/);
+});
