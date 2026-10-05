@@ -1,0 +1,42 @@
+{
+  "name": "shipwright",
+  "version": "0.1.0",
+  "description": "Ship iOS apps from Claude Code with Xcode Cloud and App Store Connect: see what a push will ship, catch builds that never started or failed, triage failures, check release readiness, and submit for review, with your own API key.",
+  "author": { "name": "sivori", "url": "https://github.com/sivori" },
+  "homepage": "https://github.com/sivori/shipwright",
+  "repository": "https://github.com/sivori/shipwright",
+  "license": "MIT",
+  "keywords": ["ios", "xcode-cloud", "testflight", "app-store-connect", "release"],
+  "userConfig": {
+    "key_id": {
+      "type": "string",
+      "title": "App Store Connect API key ID",
+      "description": "Key ID of an App Store Connect API key (Users and Access → Integrations). App Manager role or higher to submit.",
+      "default": ""
+    },
+    "issuer_id": {
+      "type": "string",
+      "title": "Issuer ID",
+      "description": "Shown above the key list in Users and Access → Integrations.",
+      "default": ""
+    },
+    "key_path": {
+      "type": "string",
+      "title": "Private key file (.p8)",
+      "description": "Optional. Defaults to ~/.appstoreconnect/private_keys/AuthKey_<key ID>.p8, where Xcode and altool look.",
+      "default": ""
+    },
+    "push_warning": {
+      "type": "boolean",
+      "title": "Warn before pushes that start Xcode Cloud",
+      "description": "One line before a git push saying which workflows it starts and where the builds go.",
+      "default": true
+    },
+    "build_watch": {
+      "type": "boolean",
+      "title": "Watch builds after a push",
+      "description": "After a push that should start Xcode Cloud, tell Claude if no build started within 4 minutes or the build failed.",
+      "default": true
+    }
+  }
+}

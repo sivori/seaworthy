@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "shipwright": {
+      "command": "node",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/server/index.mjs"],
+      "env": {
+        "SHIPWRIGHT_KEY_ID": "${user_config.key_id}",
+        "SHIPWRIGHT_ISSUER_ID": "${user_config.issuer_id}",
+        "SHIPWRIGHT_KEY_PATH": "${user_config.key_path}"
+      }
+    }
+  }
+}

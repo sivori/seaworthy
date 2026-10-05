@@ -1,0 +1,21 @@
+{
+  "description": "Xcode Cloud push awareness: a one-line warning before pushes that start a workflow, and a background watch that reports missed or failed builds",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          { "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/pre-push.mjs\"", "timeout": 5 }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          { "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/post-push.mjs\"", "async": true, "asyncRewake": true, "timeout": 2700 }
+        ]
+      }
+    ]
+  }
+}

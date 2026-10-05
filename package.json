@@ -1,0 +1,10 @@
+{
+  "name": "shipwright",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Claude Code plugin: Xcode Cloud and App Store releases",
+  "scripts": { "test": "node --test test/*.test.mjs" },
+  "engines": { "node": ">=18" },
+  "license": "MIT"
+}
