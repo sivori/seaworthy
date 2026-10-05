@@ -2,11 +2,11 @@
 // PreToolUse(Bash): before a `git push`, say in one line which Xcode Cloud
 // workflows it starts and where their builds go. Never blocks the push.
 
-import { readInput, resolvePushes, enabled } from './lib.mjs';
+import { readInput, resolvePushes, settings } from './lib.mjs';
 import { describeDistribution } from '../lib/ci.mjs';
 
 try {
-  if (!enabled('PUSH_WARNING')) process.exit(0);
+  if (!settings.pushWarning) process.exit(0);
   const input = await readInput();
   const res = await resolvePushes(input.tool_input?.command || '', input.cwd || process.cwd(), { timeoutMs: 2500 });
   if (!res?.pushes.length) process.exit(0);

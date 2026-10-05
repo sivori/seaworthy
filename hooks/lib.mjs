@@ -59,4 +59,8 @@ export async function resolvePushes(command, cwd, { timeoutMs }) {
   return { api, pushes };
 }
 
-export const enabled = (name) => (process.env[`CLAUDE_PLUGIN_OPTION_${name}`] ?? 'true') !== 'false';
+// Fixed names, not computed ones: each switch is one boolean plugin setting.
+export const settings = {
+  pushWarning: process.env.CLAUDE_PLUGIN_OPTION_PUSH_WARNING !== 'false',
+  buildWatch: process.env.CLAUDE_PLUGIN_OPTION_BUILD_WATCH !== 'false',
+};

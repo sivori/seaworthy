@@ -4,14 +4,13 @@
 // text) when no run appears, which is the webhook that silently never arrived,
 // or when the run fails. Stays silent on success.
 
-import { readInput, resolvePushes, enabled } from './lib.mjs';
+import { readInput, resolvePushes, settings } from './lib.mjs';
 import { findRunsForCommit } from '../lib/ci.mjs';
 
 // Overridable so the watcher can be exercised in seconds rather than minutes.
-const ms = (name, dflt) => Number(process.env[`SEAWORTHY_${name}`]) || dflt;
-const POLL_MS = ms('POLL_MS', 20_000);
-const START_GRACE_MS = ms('START_GRACE_MS', 4 * 60_000);
-const MAX_WATCH_MS = ms('MAX_WATCH_MS', 40 * 60_000);
+const POLL_MS = Number(process.env.SEAWORTHY_POLL_MS) || 20_000;
+const START_GRACE_MS = Number(process.env.SEAWORTHY_START_GRACE_MS) || 4 * 60_000;
+const MAX_WATCH_MS = Number(process.env.SEAWORTHY_MAX_WATCH_MS) || 40 * 60_000;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 function failedPush(resp) {
@@ -20,7 +19,7 @@ function failedPush(resp) {
 }
 
 try {
-  if (!enabled('BUILD_WATCH')) process.exit(0);
+  if (!settings.buildWatch) process.exit(0);
   const input = await readInput();
   if (failedPush(input.tool_response)) process.exit(0);
   const res = await resolvePushes(input.tool_input?.command || '', input.cwd || process.cwd(), { timeoutMs: 15000 });
