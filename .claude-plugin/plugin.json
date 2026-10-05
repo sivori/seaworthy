@@ -1,14 +1,15 @@
 {
-  "name": "shipwright",
-  "version": "0.2.0",
+  "name": "seaworthy",
+  "displayName": "Seaworthy",
+  "version": "0.3.0",
   "description": "Ship iOS apps from Claude Code with Xcode Cloud and App Store Connect: see what a push will ship, catch builds that never started or failed, triage failures, check release readiness, and submit for review, with your own API key.",
   "icon": "./.claude-plugin/icon.png",
   "author": {
     "name": "sivori",
     "url": "https://github.com/sivori"
   },
-  "homepage": "https://github.com/sivori/shipwright",
-  "repository": "https://github.com/sivori/shipwright",
+  "homepage": "https://github.com/sivori/seaworthy",
+  "repository": "https://github.com/sivori/seaworthy",
   "license": "MIT",
   "keywords": [
     "ios",

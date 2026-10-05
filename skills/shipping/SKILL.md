@@ -5,7 +5,7 @@ description: Release know-how for iOS, tvOS, watchOS and macOS apps built with X
 
 # Shipping with Xcode Cloud and App Store Connect
 
-The shipwright MCP tools do the work; this is what to know while using them.
+The seaworthy MCP tools do the work; this is what to know while using them.
 
 ## The tools, by tier
 

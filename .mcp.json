@@ -1,12 +1,12 @@
 {
   "mcpServers": {
-    "shipwright": {
+    "seaworthy": {
       "command": "node",
       "args": ["${CLAUDE_PLUGIN_ROOT}/server/index.mjs"],
       "env": {
-        "SHIPWRIGHT_KEY_ID": "${user_config.key_id}",
-        "SHIPWRIGHT_ISSUER_ID": "${user_config.issuer_id}",
-        "SHIPWRIGHT_PRIVATE_KEY": "${user_config.private_key}"
+        "SEAWORTHY_KEY_ID": "${user_config.key_id}",
+        "SEAWORTHY_ISSUER_ID": "${user_config.issuer_id}",
+        "SEAWORTHY_PRIVATE_KEY": "${user_config.private_key}"
       }
     }
   }

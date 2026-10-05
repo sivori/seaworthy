@@ -8,7 +8,7 @@ import { readInput, resolvePushes, enabled } from './lib.mjs';
 import { findRunsForCommit } from '../lib/ci.mjs';
 
 // Overridable so the watcher can be exercised in seconds rather than minutes.
-const ms = (name, dflt) => Number(process.env[`SHIPWRIGHT_${name}`]) || dflt;
+const ms = (name, dflt) => Number(process.env[`SEAWORTHY_${name}`]) || dflt;
 const POLL_MS = ms('POLL_MS', 20_000);
 const START_GRACE_MS = ms('START_GRACE_MS', 4 * 60_000);
 const MAX_WATCH_MS = ms('MAX_WATCH_MS', 40 * 60_000);
@@ -46,7 +46,7 @@ try {
       if (!runs.length) {
         if (Date.now() - started > START_GRACE_MS) {
           const filtered = w.wfs.some((x) => x.branch?.hasFileRule);
-          messages.push(`shipwright: no Xcode Cloud build started for ${short} on ${w.branch} (${w.product.name} › ${w.wfs.map((x) => x.name).join(', ')}) ${Math.round(START_GRACE_MS / 60000)} minutes after the push. ${filtered ? 'The workflow has a files-and-folders filter, which may have skipped this commit; otherwise the' : 'The'} GitHub webhook was probably missed. Tell the user, and offer start_build (it asks for confirmation first).`);
+          messages.push(`seaworthy: no Xcode Cloud build started for ${short} on ${w.branch} (${w.product.name} › ${w.wfs.map((x) => x.name).join(', ')}) ${Math.round(START_GRACE_MS / 60000)} minutes after the push. ${filtered ? 'The workflow has a files-and-folders filter, which may have skipped this commit; otherwise the' : 'The'} GitHub webhook was probably missed. Tell the user, and offer start_build (it asks for confirmation first).`);
           pending.delete(w);
         }
         continue;
@@ -55,7 +55,7 @@ try {
       if (r.executionProgress !== 'COMPLETE') continue;
       pending.delete(w);
       if (r.completionStatus === 'FAILED' || r.completionStatus === 'ERRORED') {
-        messages.push(`shipwright: Xcode Cloud run #${r.number} for ${short} (${w.product.name}) ${r.completionStatus}. Call triage_run with app "${w.product.name}" and run_number ${r.number} to see why, then tell the user.`);
+        messages.push(`seaworthy: Xcode Cloud run #${r.number} for ${short} (${w.product.name}) ${r.completionStatus}. Call triage_run with app "${w.product.name}" and run_number ${r.number} to see why, then tell the user.`);
       }
     }
   }
@@ -67,6 +67,6 @@ try {
   }
 } catch (e) {
   // Silent by design; see hooks/lib.mjs.
-  if (process.env.SHIPWRIGHT_DEBUG) console.error(e);
+  if (process.env.SEAWORTHY_DEBUG) console.error(e);
 }
 process.exit(0);

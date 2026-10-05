@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// shipwright MCP server: Xcode Cloud + App Store releases over the App Store
+// seaworthy MCP server: Xcode Cloud + App Store releases over the App Store
 // Connect API, with the user's own key. stdio, newline-delimited JSON-RPC,
 // no dependencies.
 //
@@ -15,7 +15,7 @@ import { loadCiIndex, findProduct, recentRuns, summarizeRun, findRunsForCommit, 
 import { findApp, gatherRelease, checkReadiness, planSubmission, executeSubmission, compareVersions, PLATFORMS } from '../lib/release.mjs';
 import { gate } from '../lib/confirm.mjs';
 
-const VERSION = '0.2.0';
+const VERSION = '0.3.0';
 
 let apiCache;
 function api() {
@@ -337,7 +337,7 @@ async function handle(msg) {
         return send({ jsonrpc: '2.0', id, result: {
           protocolVersion: params?.protocolVersion || '2025-06-18',
           capabilities: { tools: {} },
-          serverInfo: { name: 'shipwright', version: VERSION },
+          serverInfo: { name: 'seaworthy', version: VERSION },
           instructions: 'Xcode Cloud and App Store release tools using the user\'s own App Store Connect API key. start_build and submit_for_review are irreversible and return a plan plus a confirm token first: always show the plan and get an explicit yes from the user before calling again with confirm. Never pass a token the user has not approved.',
         } });
       case 'ping':

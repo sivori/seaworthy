@@ -127,12 +127,12 @@ test('resolveCreds reads only plugin settings and repairs a flattened .p8', asyn
   const { generateKeyPairSync } = await import('node:crypto');
   const pem = generateKeyPairSync('ec', { namedCurve: 'prime256v1' }).privateKey.export({ type: 'pkcs8', format: 'pem' });
   // Other tools' variables are ignored, and so are unfilled placeholders.
-  assert.match(resolveCreds({ ASC_KEY_ID: 'K', ASC_ISSUER_ID: 'I', SHIPWRIGHT_KEY_ID: '${user_config.key_id}' }).error, /not configured/);
+  assert.match(resolveCreds({ ASC_KEY_ID: 'K', ASC_ISSUER_ID: 'I', SEAWORTHY_KEY_ID: '${user_config.key_id}' }).error, /not configured/);
   const flat = pem.replace(/\n/g, ' ');
   const r = resolveCreds({ CLAUDE_PLUGIN_OPTION_KEY_ID: 'K', CLAUDE_PLUGIN_OPTION_ISSUER_ID: 'I', CLAUDE_PLUGIN_OPTION_PRIVATE_KEY: flat });
   assert.equal(r.error, undefined);
   assert.equal(r.privateKey, pem);
-  assert.match(resolveCreds({ SHIPWRIGHT_KEY_ID: 'K', SHIPWRIGHT_ISSUER_ID: 'I', SHIPWRIGHT_PRIVATE_KEY: 'not a key' }).error, /not a valid/);
+  assert.match(resolveCreds({ SEAWORTHY_KEY_ID: 'K', SEAWORTHY_ISSUER_ID: 'I', SEAWORTHY_PRIVATE_KEY: 'not a key' }).error, /not a valid/);
 });
 
 test('redactSecrets masks token-shaped strings in log lines', async () => {

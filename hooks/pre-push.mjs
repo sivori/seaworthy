@@ -16,11 +16,11 @@ try {
     systemMessage: `⛵ ${line}`,
     hookSpecificOutput: {
       hookEventName: 'PreToolUse',
-      additionalContext: `${line} If any archive ships to TestFlight, this push is a release: make sure the user meant to ship it. shipwright watches for the build after the push.`,
+      additionalContext: `${line} If any archive ships to TestFlight, this push is a release: make sure the user meant to ship it. seaworthy watches for the build after the push.`,
     },
   }));
 } catch (e) {
   // Silent by design; see hooks/lib.mjs.
-  if (process.env.SHIPWRIGHT_DEBUG) console.error(e);
+  if (process.env.SEAWORTHY_DEBUG) console.error(e);
 }
 process.exit(0);
