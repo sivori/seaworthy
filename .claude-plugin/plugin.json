@@ -1,7 +1,7 @@
 {
   "name": "seaworthy",
   "displayName": "Seaworthy",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Ship iOS apps from Claude Code with Xcode Cloud and App Store Connect: see what a push will ship, catch builds that never started or failed, triage failures, check release readiness, and submit for review, with your own API key.",
   "icon": "./.claude-plugin/icon.png",
   "author": {

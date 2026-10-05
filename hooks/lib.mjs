@@ -43,7 +43,9 @@ export async function resolvePushes(command, cwd, { timeoutMs }) {
   for (const p of parsed) {
     const dir = p.dir ? resolve(cwd, p.dir) : cwd;
     const current = git(dir, 'rev-parse', '--abbrev-ref', 'HEAD');
-    const remote = p.remote || git(dir, 'config', `branch.${current}.remote`) || 'origin';
+    // The current branch's upstream, e.g. "origin/master" → "origin".
+    const upstream = git(dir, 'rev-parse', '--abbrev-ref', '--symbolic-full-name', '@{upstream}');
+    const remote = p.remote || upstream.split('/')[0] || 'origin';
     const url = /[:@/]/.test(remote) ? remote : git(dir, 'remote', 'get-url', remote);
     if (!url) continue;
     const refspecs = p.refspecs.length ? p.refspecs : [undefined];
