@@ -1,6 +1,5 @@
 ## Now
 - [ ] Confirm the harness accepts a 2700 s hook timeout (verified past 4 min; a lower cap would kill a long build watch silently)
-- [ ] Submit to the claude.ai directory (claude.ai/directory/manage, repo sivori/seaworthy, root, branch main)
 
 ## Next
 - [ ] check_release: warn when the attached build is older than the newest valid build for that version
@@ -15,6 +14,7 @@
 - [ ] Xcode Cloud compute-hours usage, if Apple exposes it @idea
 
 ## Done
+- [x] 2026-10-05 Submitted to the claude.ai directory (v0.4.0; credential finding left for reviewer confirmation with a note)
 - [x] 2026-10-05 0.4.0 from the first real failure (Exorcise build 113, closed 1.11 train): triage diagnoses Prepare-for-ASC failures (archive version vs approved versions), log excerpts drop Xcode provisioning chatter, pre-push asks before pushing a commit stamped with an approved version
 - [x] 2026-10-05 Renamed shipwright → seaworthy (0.3.0): four directory plugins already used "shipwright" (NAME_CONFUSABLE hold)
 - [x] 2026-10-05 Verified the marketplace install end to end with credentials only in plugin settings (ASC_* unset): pre-push warning, decoy push (fetch URL = real repo, pushurl = local bare repo), missed-build rewake after 4 min
